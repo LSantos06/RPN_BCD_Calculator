@@ -102,24 +102,55 @@ INIT:
 ;;;Carregar Fila
 ;Operacao a ser executada na calculadora
 CARREGAR_FILA:
-    ;Calculo do slide
-    ; MOV 40H, #04          ;4
-    ; MOV 41H, #02          ;2
-    ; MOV 42H, #0DH         ;ENTER
-    ; MOV 43H, #03          ;3
-    ; MOV 44H, #05          ;5
-    ; MOV 45H, #04          ;4
-    ; MOV 46H, #10H         ;+
-    ; MOV 47H, #0FFH        ;T_INV
-
-    ;Teste do recebimento dos numeros
+    ;OK ;Teste do recebimento dos numeros
     ; MOV 40H, #03          ;3456
     ; MOV 41H, #04
     ; MOV 42H, #05
     ; MOV 43H, #06
     ; MOV 44H, #0FFH
 
-    ;Teste subtracao
+    ; MOV 40H, #03          ;34567, OVFL
+    ; MOV 41H, #04
+    ; MOV 42H, #05
+    ; MOV 43H, #06
+    ; MOV 44H, #07
+    ; MOV 45H, #0FFH
+
+    ;OK ;Teste do CHS
+    ; MOV 40H, #0AH         ;(- X)
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do CLX
+    ; MOV 40H, #0BH         ;CLR X
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do CLS
+    ; MOV 40H, #0CH         ;CLR STACK
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do ENTER
+    ; MOV 40H, #0DH         ;PUSH
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do DROP
+    ; MOV 40H, #0EH         ;POP
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do SWAPI
+    ; MOV 40H, #0FH         ;SWAP
+    ; MOV 41H, #0FFH
+
+    ;OK ;;;Teste do MAIS
+    MOV 40H, #04          ;4
+    MOV 41H, #02          ;2
+    MOV 42H, #0DH         ;ENTER
+    MOV 43H, #03          ;3
+    MOV 44H, #05          ;5
+    MOV 45H, #04          ;4
+    MOV 46H, #10H         ;+
+    MOV 47H, #0FFH        ;T_INV
+
+    ;OK ;Teste do MENOS
     ; MOV 40H, #05          ;57 - 37
     ; MOV 41H, #07
     ; MOV 42H, #0DH
@@ -128,7 +159,7 @@ CARREGAR_FILA:
     ; MOV 45H, #11H
     ; MOV 46H, #0FFH
 
-    ;Teste multiplicacao
+    ;OK ;Teste do MULT
     ; MOV 40H, #05          ;50 * 9
     ; MOV 41H, #00
     ; MOV 42H, #0DH
@@ -136,13 +167,15 @@ CARREGAR_FILA:
     ; MOV 44H, #12H
     ; MOV 45H, #0FFH
 
-    ;Teste quadrado
-    ; MOV 40H, #05          ;5²
-    ; MOV 41H, #19H
-    ; MOV 42H, #0FFH
+    ;OK ;Teste do DIVI
+    ; MOV 40H, #02            ;20 / 8
+    ; MOV 41H, #00
+    ; MOV 42H, #0DH
+    ; MOV 43H, #08
+    ; MOV 44H, #13H
+    ; MOV 45H, #0FFH
 
-    ;Teste divisao
-    ; MOV 40H, #02          ;24 / 12
+    ; MOV 40H, #02            ;24 / 12
     ; MOV 41H, #04
     ; MOV 42H, #0DH
     ; MOV 43H, #01
@@ -150,20 +183,65 @@ CARREGAR_FILA:
     ; MOV 45H, #13H
     ; MOV 46H, #0FFH
 
-    ;Teste modulo
-    ; MOV 40H, #01          ;10 / 4
+    ; MOV 40H, #03            ;30 / 10
+    ; MOV 41H, #00
+    ; MOV 42H, #0DH
+    ; MOV 43H, #01
+    ; MOV 44H, #00
+    ; MOV 45H, #13H
+    ; MOV 46H, #0FFH
+
+    ;OK ;Teste do MODUL
+    ; MOV 40H, #01          ;10 % 4
     ; MOV 41H, #00
     ; MOV 42H, #0DH
     ; MOV 43H, #04
     ; MOV 44H, #14H
     ; MOV 45H, #0FFH
 
-    ;Teste potencia
-    MOV 40H, #02          ;2 ^ 4
-    MOV 41H, #0DH
-    MOV 42H, #04
-    MOV 43H, #1AH
-    MOV 44H, #0FFH
+    ;OK ;Teste do RRX
+    ; MOV 40H, #15H         ;Rotate to Right
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do RLX
+    ; MOV 40H, #16H         ;Rotate to Left
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do SRX
+    ; MOV 40H, #17H           ;Shift to Right
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do SLX
+    ; MOV 40H, #18H         ;Shift to Left
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do QUAD
+    ; MOV 40H, #04          ;4 ^ 2
+    ; MOV 41H, #19H
+    ; MOV 42H, #0FFH
+
+    ;OK ;Teste do POW
+    ; MOV 40H, #02          ;2 ^ 4
+    ; MOV 41H, #0DH
+    ; MOV 42H, #04
+    ; MOV 43H, #1AH
+    ; MOV 44H, #0FFH
+
+    ;OK ;Teste do RSUP
+    ; MOV 40H, #1BH         ;Rodar pilha p/ cima
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do RSDW
+    ; MOV 40H, #1CH         ;Rodar pilha p/ baixo
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do STO
+    ; MOV 40H, #1DH           ;Armazena X na memoria
+    ; MOV 41H, #0FFH
+
+    ;OK ;Teste do RCL
+    ; MOV 40H, #1EH           ;Copia X para a memoria
+    ; MOV 41H, #0FFH
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Ler Fila
@@ -292,7 +370,7 @@ CHECAR_RSUP:
 
 CHECAR_RSDW:
     CJNE A, #RSDW, CHECAR_STO   ;Se A != RSDW, checar se a proxima tecla foi pressionada
-    LCALL RODAR_PILHA_CIMA      ;Se A == RSDW, executa a operacao
+    LCALL RODAR_PILHA_BAIXO     ;Se A == RSDW, executa a operacao
     MOV R6, #0H                 ;Contador = 0
     JMP LER_FILA
 
@@ -457,107 +535,274 @@ SWAP_X_Y:
 
 ;;;Rotina - Adicao (Y,X)
 ADICAO_Y_X:
-    MOV A, YL           ;A = YL
-    ADD A, XL           ;A = YL + XL
-    DA A                ;Ajuste para BCD
-    MOV YL, A           ;YL = YL + XL
+    ;Verificando os sinais
+    MOV A, #0H              ;A = 0
+    MOV C, SINAL_X          ;C = SINAL_X
+    ADDC A, #0H             ;A.0 = SINAL_X
+    MOV AUX1L, A            ;AUX1L.0 = SINAL_X
 
-    MOV A, YH           ;A = YH
-    ADDC A, XH          ;A = YH + XH + C
-    DA A                ;Ajuste para BCD
-    MOV YH, A           ;YH = YH + XH
+    MOV A, #0H              ;A = 0
+    MOV C, SINAL_Y          ;C = SINAL_Y
+    ADDC A, #0H             ;A.0 =
+    MOV AUX1H, A            ;AUX1H.0 = SINAL_Y
 
-    LCALL DROP_POP
+    XRL A, AUX1L            ;A.0 = AUX1L.0 xor AUX1H.0
 
-    RET
+    MOV C, A.0              ;C = SINAL_X xor SINAL_Y
+
+    ;SINAIS IGUAIS, XOR = 0
+    ;(+Y) + (+X) = Y + X
+    ;(-Y) + (-X) = (-Y) - X
+    JNC SINAIS_IGUAIS
+
+    ;SINAIS DIFERENTES, XOR = 1
+    ;(-Y) + (+X) = -Y + X
+    ;(+Y) + (-X) = Y - X
+    JC SINAIS_DIFERENTES
+
+    SINAIS_IGUAIS:
+        MOV A, YL           ;A = YL
+        ADD A, XL           ;A = YL + XL
+        DA A                ;Ajuste para BCD
+        MOV YL, A           ;YL = YL + XL
+
+        MOV A, YH           ;A = YH
+        ADDC A, XH          ;A = YH + XH + C
+        DA A                ;Ajuste para BCD
+        MOV YH, A           ;YH = YH + XH
+
+        JC OVERFLOW_SOMA    ;Se tiver Carry tem-se overflow
+
+        LCALL DROP_POP
+
+        RET
+
+    OVERFLOW_SOMA:
+        SETB OVFL           ;Mais de 4 digitos, overflow
+
+        RET
+
+    SINAIS_DIFERENTES:
+        MOV C, SINAL_X
+        JC X_NEGATIVO       ;X eh negativo
+
+        MOV C, SINAL_Y
+        JC Y_NEGATIVO       ;Y eh negativo
+
+        X_NEGATIVO:
+            LCALL COMPLEMENTA_X ;Complementando X
+
+            CLR C
+
+            MOV A, YL           ;A = YL
+            ADDC A, XL          ;A = YL - XL
+            DA A                ;Ajuste para BCD
+            MOV YL, A           ;YL = YL - XL
+
+            MOV A, YH           ;A = YH
+            ADDC A, XH          ;A = YH - XH + C
+            DA A                ;Ajuste para BCD
+            MOV YH, A           ;YH = YH - XH
+
+            ;Se Carry == 0, resultado negativo, complementa
+            JNC RESULTADO_NEGATIVO_X
+
+            ;Se Carry == 1, resultado positivo, não complementa
+            RESULTADO_POSITIVO_X:
+                CPL C
+
+                MOV SINAL_Y, C      ;Sinal final
+
+                LCALL DROP_POP
+
+                RET
+
+            RESULTADO_NEGATIVO_X:
+                LCALL COMPLEMENTA_Y
+                JMP RESULTADO_POSITIVO_X
+
+            ;Subtrai 9 de cada digito BCD, e soma 1 para negativar o numero
+            COMPLEMENTA_X:
+                ;XL
+                ;LSByte
+                MOV A, XL           ;A = XL
+                ANL A, #0FH         ;A = LSByte(XL)
+                MOV AUX1L, A        ;AUX1L = LSByte(XL)
+
+                MOV A, #09H         ;A = 9
+                CLR C
+                SUBB A, AUX1L       ;A = 9 - LSByte(XL)
+
+                ANL A, #0FH         ;A = LSByte(9 - LSByte(XL))
+                MOV AUX1L, A        ;AUX1L = [0, 9 - LSByte(XL)]
+
+                ;MSByte
+                MOV A, XL           ;A = XL
+                ANL A, #0F0H        ;A = MSByte(XL)
+                MOV AUX2L, A        ;AUX2L = MSByte(XL)
+
+                MOV A, #90H         ;A = 9
+                CLR C
+                SUBB A, AUX2L       ;A = 9 - MSByte(XL)
+
+                ANL A, #0F0H        ;A = MSByte(A = 9 - MSByte(XL))
+                ORL AUX1L, A        ;AUX1L = [9 - MSByte(XL), 9 - LSByte(XL)]
+
+                MOV XL, AUX1L       ;XL = [9 - MSByte(XL), 9 - LSByte(XL)]
+
+                ;XH
+                ;LSByte
+                MOV A, XH           ;A = XH
+                ANL A, #0FH         ;A = LSByte(XH)
+                MOV AUX1H, A        ;AUX1H = LSByte(XH)
+
+                MOV A, #09H         ;A = 9
+                CLR C
+                SUBB A, AUX1H       ;A = 9 - LSByte(XH)
+
+                ANL A, #0FH         ;A = LSByte(9 - LSByte(XH))
+                MOV AUX1H, A        ;AUX1H = [0, 9 - LSByte(XH)]
+
+                ;MSByte
+                MOV A, XH           ;A = XH
+                ANL A, #0F0H        ;A = MSByte(XH)
+                MOV AUX2H, A        ;AUX2H = MSByte(XH)
+
+                MOV A, #90H         ;A = 9
+                CLR C
+                SUBB A, AUX2H       ;A = 9 - MSByte(XH)
+
+                ANL A, #0F0H        ;A = MSByte(9 - MSByte(XH))
+                ORL AUX1H, A        ;AUX1H = [9 - MSByte(XH), 9 - LSByte(XH)]
+
+                MOV XH, AUX1H       ;XH = [9 - MSByte(XH), 9 - LSByte(XH)]
+
+                ;Soma o numero com 1 para obter o resultado final
+                CLR C
+
+                MOV A, XL           ;A = XL
+                ADDC A, #01         ;A = XL + 1
+                DA A                ;Ajuste para BCD
+                MOV XL, A           ;XL = XL + 1
+
+                MOV A, XH           ;A = XH
+                ADDC A, #0H         ;A = XH + 1
+                DA A                ;Ajuste para BCD
+                MOV XH, A           ;XL = XH + 1
+
+                RET
+
+        Y_NEGATIVO:
+            LCALL COMPLEMENTA_Y ;Complementando Y
+
+            CLR C
+
+            MOV A, YL           ;A = - YL
+            ADDC A, XL          ;A = - YL + XL
+            DA A                ;Ajuste para BCD
+            NOP
+            MOV YL, A           ;YL = - YL + XL
+
+            MOV A, YH           ;A = - YH
+            ADDC A, XH          ;A = - YH + XH + C
+            DA A                ;Ajuste para BCD
+            MOV YH, A           ;YH = - YH + XH
+
+            ;Se Carry == 0, resultado negativo, complementa
+            JNC RESULTADO_NEGATIVO_Y
+
+            ;Se Carry == 1, resultado positivo, não complementa
+            RESULTADO_POSITIVO_Y:
+                CPL C
+
+                MOV SINAL_Y, C      ;Sinal final
+
+                LCALL DROP_POP
+
+                RET
+
+            RESULTADO_NEGATIVO_Y:
+                LCALL COMPLEMENTA_Y
+                JMP RESULTADO_POSITIVO_Y
+
+            ;Subtrai 9 de cada digito BCD, e soma 1 para negativar o numero
+            COMPLEMENTA_Y:
+                ;YL
+                ;LSByte
+                MOV A, YL           ;A = YL
+                ANL A, #0FH         ;A = LSByte(YL)
+                MOV AUX1L, A        ;AUX1L = LSByte(YL)
+
+                MOV A, #09H         ;A = 9
+                CLR C
+                SUBB A, AUX1L       ;A = 9 - LSByte(YL)
+
+                ANL A, #0FH         ;A = LSByte(9 - LSByte(YL))
+                MOV AUX1L, A        ;AUX1L = [0, 9 - LSByte(YL)]
+
+                ;MSByte
+                MOV A, YL           ;A = YL
+                ANL A, #0F0H        ;A = MSByte(YL)
+                MOV AUX2L, A        ;AUX2L = MSByte(YL)
+
+                MOV A, #90H         ;A = 9
+                CLR C
+                SUBB A, AUX2L       ;A = 9 - MSByte(YL)
+
+                ANL A, #0F0H        ;A = MSByte(A = 9 - MSByte(YL))
+                ORL AUX1L, A        ;AUX1L = [9 - MSByte(YL), 9 - LSByte(XL)]
+
+                MOV YL, AUX1L       ;XL = [9 - MSByte(XL), 9 - LSByte(XL)]
+
+                ;YH
+                ;LSByte
+                MOV A, YH           ;A = YH
+                ANL A, #0FH         ;A = LSByte(YH)
+                MOV AUX1H, A        ;AUX1H = LSByte(YH)
+
+                MOV A, #09H         ;A = 9
+                CLR C
+                SUBB A, AUX1H       ;A = 9 - LSByte(YH)
+
+                ANL A, #0FH         ;A = LSByte(9 - LSByte(YH))
+                MOV AUX1H, A        ;AUX1H = [0, 9 - LSByte(YH)]
+
+                ;MSByte
+                MOV A, YH           ;A = YH
+                ANL A, #0F0H        ;A = MSByte(YH)
+                MOV AUX2H, A        ;AUX2H = MSByte(YH)
+
+                MOV A, #90H         ;A = 9
+                CLR C
+                SUBB A, AUX2H       ;A = 9 - MSByte(YH)
+
+                ANL A, #0F0H        ;A = MSByte(9 - MSByte(YH))
+                ORL AUX1H, A        ;AUX1H = [9 - MSByte(YH), 9 - LSByte(YH)]
+
+                MOV YH, AUX1H       ;XH = [9 - MSByte(YH), 9 - LSByte(YH)]
+
+                ;Soma o numero com para obter o resultado final
+                CLR C
+
+                MOV A, YL           ;A = YL
+                ADDC A, #01         ;A = YL + 1
+                DA A                ;Ajuste para BCD
+                MOV YL, A           ;YL = YL + 1
+
+                MOV A, YH           ;A = YH
+                ADDC A, #0H         ;A = YH + 1
+                DA A                ;Ajuste para BCD
+                MOV YH, A           ;YH = YH + 1
+
+                RET
 
 ;;;Rotina - Subtracao (Y,X)
 SUBTRACAO_Y_X:
-    MOV R5, YL
-    MOV R6, YH          ;Armazena o valor de Y
+    CPL SINAL_X         ;Y - X
 
-    LCALL NEGATIVO_BCD  ;XL = - XL
-
-    MOV YL, R5
-    MOV YH, R6          ;Restaura o valor de Y
-
-    MOV A, YL           ;A = YL
-    ADD A, XL           ;A = YL + (- XL)
-    DA A                ;Ajuste para BCD
-    MOV YL, A           ;YL = YL + (- XL)
-
-    MOV A, YH           ;A = YH
-    ADDC A, XH          ;A = YH + (- XH) + C
-    DA A                ;Ajuste para BCD
-    MOV YH, A           ;YH = YH + (- XH)
-
-    LCALL DROP_POP
+    LCALL ADICAO_Y_X
 
     RET
-
-    ;Subtrai 9 de cada digito BCD, e soma 1 para negativar o numero
-    NEGATIVO_BCD:
-        ;XL
-        ;LSByte
-        MOV A, XL           ;A = XL
-        ANL A, #0FH         ;A = LSByte(XL)
-        MOV AUX1L, A        ;AUX1L = LSByte(XL)
-
-        MOV A, #09H         ;A = 9
-        CLR C
-        SUBB A, AUX1L       ;A = 9 - LSByte(XL)
-
-        ANL A, #0FH         ;A = LSByte(9 - LSByte(XL))
-        MOV AUX1L, A        ;AUX1L = [0, 9 - LSByte(XL)]
-
-        ;MSByte
-        MOV A, XL           ;A = XL
-        ANL A, #0F0H        ;A = MSByte(XL)
-        MOV AUX2L, A        ;AUX1L = MSByte(XL)
-
-        MOV A, #90H         ;A = 9
-        CLR C
-        SUBB A, AUX2L       ;A = 9 - MSByte(XL)
-
-        ANL A, #0F0H        ;A = MSByte(A = 9 - MSByte(XL))
-        ORL AUX1L, A        ;AUX1L = [9 - MSByte(XL), 9 - LSByte(XL)]
-
-        MOV XL, AUX1L       ;XL = [9 - MSByte(XL), 9 - LSByte(XL)]
-
-        ;XH
-        ;LSByte
-        MOV A, XH           ;A = XH
-        ANL A, #0FH         ;A = LSByte(XH)
-        MOV AUX1H, A        ;AUX1H = LSByte(XH)
-
-        MOV A, #09H         ;A = 9
-        CLR C
-        SUBB A, AUX1H       ;A = 9 - LSByte(XH)
-
-        ANL A, #0FH         ;A = LSByte(9 - LSByte(XH))
-        MOV AUX1H, A        ;AUX1H = [0, 9 - LSByte(XH)]
-
-        ;MSByte
-        MOV A, XH           ;A = XH
-        ANL A, #0F0H        ;A = MSByte(XH)
-        MOV AUX2H, A        ;AUX1H = MSByte(XH)
-
-        MOV A, #90H         ;A = 9
-        CLR C
-        SUBB A, AUX2H       ;A = 9 - MSByte(XH)
-
-        ANL A, #0F0H        ;A = MSByte(9 - MSByte(XH))
-        ORL AUX1H, A        ;AUX1H = [9 - MSByte(XH), 9 - LSByte(XH)]
-
-        MOV XH, AUX1H       ;XH = [9 - MSByte(XH), 9 - LSByte(XH)]
-
-        ;Soma o numero com para obter o resultado final
-        MOV YL, #01H
-        MOV YH, #0H
-
-        LCALL ADICAO_Y_X
-
-        RET
 
 ;;;Rotina - Multiplicacao (Y,X)
 ;Multiplicar um numero por n, eh a msm coisa que somar o numero com ele msm n vezes
@@ -637,40 +882,57 @@ DIVISAO_Y_X:
         MOV R5, XL
         MOV R6, XH              ;R5,R4 = armazena o resultado da subtracao
 
+        ;Verifica se o resto eh 0
+        MOV A, R5
+        ORL A, R6
+        JZ RESTO_0
+
         ;Verifica se o resultado da subtracao eh negativo
-        MOV YL, R5
-        MOV YH, R6              ;Y = resultado da subtracao
+        MOV A, #0H              ;A = 0
+        MOV C, SINAL_X          ;C = SINAL_X
+        ADDC A, #0H             ;A.0 = SINAL_X
+        JNZ MENOR_0             ;SINAL NEGATIVO
 
-        MOV XL, #0H
-        MOV XH, #0H             ;X = 0
+        ;Contando o numero de subtracoes feitas
+        MOV YL, R3
+        MOV YH, R4              ;Quociente
 
-        LCALL SUBTRACAO_Y_X
+        MOV XL, #01H
+        MOV XH, #0H             ;Quociente++
 
-        ;Verifica se o resultado eh maior ou menor q 0
-        MOV A, XH
-        ANL A, #0F0H            ;Pega somente MSByte(X)
-        CJNE A, #90H, MAIOR_0   ;Se MSByte(X) != 9, X > 0
-        JMP MENOR_0
+        LCALL ADICAO_Y_X
 
-        MAIOR_0:
+        MOV R3, XL
+        MOV R4, XH              ;Quociente = Quociente++
+
+        ;Loop
+        JMP LOOP_DIVISAO        ;Efetua mais uma subtracao
+
+        ;Resto eh 0
+        RESTO_0:
             ;Contando o numero de subtracoes feitas
             MOV YL, R3
-            MOV YH, R4          ;Quociente
+            MOV YH, R4              ;Quociente
 
             MOV XL, #01H
-            MOV XH, #0H         ;Quociente++
+            MOV XH, #0H             ;Quociente++
 
             LCALL ADICAO_Y_X
 
             MOV R3, XL
-            MOV R4, XH          ;Quociente = Quociente++
+            MOV R4, XH              ;Quociente = Quociente++
 
-            ;Loop
-            JMP LOOP_DIVISAO    ;Efetua mais uma subtracao
+            MOV YL, R3
+            MOV YH, R4              ;Quociente final
 
+            LCALL DROP_POP
+
+            RET
+
+        ;Menor que 0
         MENOR_0:
             MOV YL, R3
-            MOV YH, R4          ;Quociente final
+            MOV YH, R4              ;Quociente final
 
             LCALL DROP_POP
 
@@ -680,13 +942,10 @@ DIVISAO_Y_X:
 MODULO_Y_X:
     LCALL DIVISAO_Y_X
 
-    MOV YL, R1
-    MOV YH, R2          ;Resto - X
+    MOV YL, R5
+    MOV YH, R6          ;Y = Resto
 
-    MOV XL, R5
-    MOV XH, R6          ;X
-
-    LCALL ADICAO_Y_X    ;Resto - X + X = Resto
+    LCALL DROP_POP
 
     RET
 
@@ -834,52 +1093,11 @@ POTENCIA_Y_X:
         RET
 
 ;;;Rotina - Rodar Pilha para Cima
-;T <=> X
-;Z <=> T
-;Y <=> Z
-;X <=> Y
-RODAR_PILHA_CIMA:
-    ;LSB
-    MOV A, XL           ;A = XL
-    XCH A, TL           ;TL = XL, A = TL
-    XCH A, ZL           ;ZL = TL, A = ZL
-    XCH A, YL           ;YL = ZL, A = YL
-    XCH A, XL           ;XL = YL
-
-    ;MSB
-    MOV A, XH           ;A = XH
-    XCH A, TH           ;TH = XH, A = TH
-    XCH A, ZH           ;ZH = TH, A = ZH
-    XCH A, YH           ;YH = ZH, A = YH
-    XCH A, XH           ;XH = YH
-
-    ;SINAIS
-    MOV C, SINAL_X      ;C = SINAL_X
-    MOV A, #0H          ;A = 0
-    ADDC A, #0H         ;LSB(A) = SINAL_X
-    MOV AUX1L, A        ;LSB(AUX1L) = SINAL_X
-
-    MOV C, SINAL_Y      ;C = SINAL_Y
-    MOV SINAL_X, C      ;SINAL_X = SINAL_Y
-
-    MOV C, SINAL_Z      ;C = SINAL_Z
-    MOV SINAL_Y, C      ;SINAL_Y = SINAL_Z
-
-    MOV C, SINAL_T      ;C = SINAL_T
-    MOV SINAL_Z, C      ;SINAL_Z = SINAL_T
-
-    MOV A, AUX1L        ;A = AUX1L
-    MOV C, A.0          ;C = SINAL_X
-    MOV SINAL_T, C      ;SINAL_T = SINAL_X
-
-    RET
-
-;;;Rotina - Rodar Pilha para Baixo
 ;T <=> Z
 ;Z <=> Y
 ;Y <=> X
 ;X <=> T
-RODAR_PILHA_BAIXO:
+RODAR_PILHA_CIMA:
     ;LSB
     MOV A, ZL           ;A = ZL
     XCH A, TL           ;TL = ZL, A = TL
@@ -912,6 +1130,47 @@ RODAR_PILHA_BAIXO:
     MOV A, AUX1L        ;A = AUX1L
     MOV C, A.0          ;C = SINAL_T
     MOV SINAL_X, C      ;SINAL_X = SINAL_T
+
+    RET
+
+;;;Rotina - Rodar Pilha para Baixo
+;T <=> X
+;Z <=> T
+;Y <=> Z
+;X <=> Y
+RODAR_PILHA_BAIXO:
+    ;LSB
+    MOV A, XL           ;A = XL
+    XCH A, TL           ;TL = XL, A = TL
+    XCH A, ZL           ;ZL = TL, A = ZL
+    XCH A, YL           ;YL = ZL, A = YL
+    XCH A, XL           ;XL = YL
+
+    ;MSB
+    MOV A, XH           ;A = XH
+    XCH A, TH           ;TH = XH, A = TH
+    XCH A, ZH           ;ZH = TH, A = ZH
+    XCH A, YH           ;YH = ZH, A = YH
+    XCH A, XH           ;XH = YH
+
+    ;SINAIS
+    MOV C, SINAL_X      ;C = SINAL_X
+    MOV A, #0H          ;A = 0
+    ADDC A, #0H         ;LSB(A) = SINAL_X
+    MOV AUX1L, A        ;LSB(AUX1L) = SINAL_X
+
+    MOV C, SINAL_Y      ;C = SINAL_Y
+    MOV SINAL_X, C      ;SINAL_X = SINAL_Y
+
+    MOV C, SINAL_Z      ;C = SINAL_Z
+    MOV SINAL_Y, C      ;SINAL_Y = SINAL_Z
+
+    MOV C, SINAL_T      ;C = SINAL_T
+    MOV SINAL_Z, C      ;SINAL_Z = SINAL_T
+
+    MOV A, AUX1L        ;A = AUX1L
+    MOV C, A.0          ;C = SINAL_X
+    MOV SINAL_T, C      ;SINAL_T = SINAL_X
 
     RET
 
@@ -955,7 +1214,7 @@ CHECAR_CENTENA:
     LJMP RECEBER_CENTENA               ;Contador == 3, recebe Centena
 
 CHECAR_MILHAR:
-    CJNE R6, #4, OVERFLOW              ;Contador != 4
+    CJNE R6, #4, OVERFLOW_NUMERO       ;Contador != 4
     LJMP RECEBER_MILHAR                ;Contador == 4, recebe Milhar
 
 ;A tecla mais recente deve ficar sempre a mais direita
@@ -1015,7 +1274,7 @@ RECEBER_MILHAR:
 
     RET
 
-OVERFLOW:
+OVERFLOW_NUMERO:
     SETB OVFL           ;Mais de 4 digitos, overflow
 
     RET
