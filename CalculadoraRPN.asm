@@ -35,6 +35,8 @@ AUX4H     EQU   23H
 AUX4L     EQU   24H
 AUX5H     EQU   25H
 AUX5L     EQU   26H
+AUX6H     EQU   27H
+AUX6L     EQU   28H
 
 XH        EQU   30H 			;HIGH X
 XL        EQU   31H 			;LOW X
@@ -81,19 +83,6 @@ T_INV     EQU   0FFH 	    ;Tecla invalida
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Inicializacao
 INIT:
-    ;Zerando as quatro posicoes da pilha, do topo ao final
-    MOV XH, #0H
-    MOV XL, #0H
-
-    MOV YH, #0H
-    MOV YL, #0H
-
-    MOV ZH, #0H
-    MOV ZL, #0H
-
-    MOV TH, #0H
-    MOV TL, #0H
-
     MOV R0, #F_INI        ;R0 = endereco inicial da fila
 
     MOV R6, #0H           ;Contador = 0
@@ -141,14 +130,14 @@ CARREGAR_FILA:
     ; MOV 41H, #0FFH
 
     ;OK ;;;Teste do MAIS
-    MOV 40H, #04          ;4
-    MOV 41H, #02          ;2
-    MOV 42H, #0DH         ;ENTER
-    MOV 43H, #03          ;3
-    MOV 44H, #05          ;5
-    MOV 45H, #04          ;4
-    MOV 46H, #10H         ;+
-    MOV 47H, #0FFH        ;T_INV
+    ; MOV 40H, #04          ;4
+    ; MOV 41H, #02          ;2
+    ; MOV 42H, #0DH         ;ENTER
+    ; MOV 43H, #03          ;3
+    ; MOV 44H, #05          ;5
+    ; MOV 45H, #04          ;4
+    ; MOV 46H, #10H         ;+
+    ; MOV 47H, #0FFH        ;T_INV
 
     ;OK ;Teste do MENOS
     ; MOV 40H, #05          ;57 - 37
@@ -167,15 +156,29 @@ CARREGAR_FILA:
     ; MOV 44H, #12H
     ; MOV 45H, #0FFH
 
+    ; MOV 40H, #01          ;-15 * 2
+    ; MOV 41H, #05
+    ; MOV 42H, #0DH
+    ; MOV 43H, #02
+    ; MOV 44H, #12H
+    ; MOV 45H, #0FFH
+
     ;OK ;Teste do DIVI
-    ; MOV 40H, #02            ;20 / 8
+    ; MOV 40H, #02          ;20 / 8
     ; MOV 41H, #00
     ; MOV 42H, #0DH
     ; MOV 43H, #08
     ; MOV 44H, #13H
     ; MOV 45H, #0FFH
 
-    ; MOV 40H, #02            ;24 / 12
+    ; MOV 40H, #02          ;20 / 0, ERRO
+    ; MOV 41H, #00
+    ; MOV 42H, #0DH
+    ; MOV 43H, #00
+    ; MOV 44H, #13H
+    ; MOV 45H, #0FFH
+
+    ; MOV 40H, #02          ;24 / 12
     ; MOV 41H, #04
     ; MOV 42H, #0DH
     ; MOV 43H, #01
@@ -183,7 +186,7 @@ CARREGAR_FILA:
     ; MOV 45H, #13H
     ; MOV 46H, #0FFH
 
-    ; MOV 40H, #03            ;30 / 10
+    ; MOV 40H, #03          ;30 / 10
     ; MOV 41H, #00
     ; MOV 42H, #0DH
     ; MOV 43H, #01
@@ -208,7 +211,7 @@ CARREGAR_FILA:
     ; MOV 41H, #0FFH
 
     ;OK ;Teste do SRX
-    ; MOV 40H, #17H           ;Shift to Right
+    ; MOV 40H, #17H         ;Shift to Right
     ; MOV 41H, #0FFH
 
     ;OK ;Teste do SLX
@@ -221,9 +224,15 @@ CARREGAR_FILA:
     ; MOV 42H, #0FFH
 
     ;OK ;Teste do POW
-    ; MOV 40H, #02          ;2 ^ 4
+    MOV 40H, #04          ;4 ^ 5
+    MOV 41H, #0DH
+    MOV 42H, #05
+    MOV 43H, #1AH
+    MOV 44H, #0FFH
+
+    ; MOV 40H, #05          ;-5 ^ 2
     ; MOV 41H, #0DH
-    ; MOV 42H, #04
+    ; MOV 42H, #02
     ; MOV 43H, #1AH
     ; MOV 44H, #0FFH
 
@@ -395,7 +404,7 @@ CHECAR_NUM:
 ;;;Rotina - Tecla Invalida
 TECLA_INVALIDA:
 
-    JMP FIM
+    JMP $
 
 ;;;Rotina - Fim
 FIM:
@@ -810,14 +819,33 @@ MULTIPLICACAO_Y_X:
     ;Enquanto n > 0
     ;Somar o numero com ele msm
 
+    ;Verificando os sinais
+    MOV A, #0H              ;A = 0
+    MOV C, SINAL_X          ;C = SINAL_X
+    ADDC A, #0H             ;A.0 = SINAL_X
+    MOV AUX1L, A            ;AUX1L.0 = SINAL_X
+
+    MOV A, #0H              ;A = 0
+    MOV C, SINAL_Y          ;C = SINAL_Y
+    ADDC A, #0H             ;A.0 =
+    MOV AUX1H, A            ;AUX1H.0 = SINAL_Y
+
+    XRL A, AUX1L            ;A.0 = AUX1L.0 xor AUX1H.0
+
+    ;SINAIS DIFERENTES, XOR = 1, Resultado eh negativo
+    MOV AUX6L, A
+
+    CLR SINAL_X
+    CLR SINAL_Y             ;Limpa os sinais para a soma
+
     MOV R1, YL
-    MOV R2, YH          ;R2,R1 = Y inicial, numero a ser somado
+    MOV R2, YH              ;R2,R1 = Y inicial, numero a ser somado
 
     MOV R3, YL
-    MOV R4, YH          ;R4,R3 = Y inicial, numero a ser somado
+    MOV R4, YH              ;R4,R3 = Y inicial, numero a ser somado
 
     MOV R5, XL
-    MOV R6, XH          ;R6,R5 = X inicial, numero de vezes a ser somado
+    MOV R6, XH              ;R6,R5 = X inicial, numero de vezes a ser somado
 
     LOOP_MULTIPLICACAO:
         ;Soma inicial para o resultado da multiplicacao
@@ -851,6 +879,10 @@ MULTIPLICACAO_Y_X:
         MOV YL, R1
         MOV YH, R2          ;R2,R1 = Resultado final
 
+        MOV A, AUX6L
+        MOV C, A.0
+        MOV SINAL_Y, C      ;Sinal resultado
+
         LCALL DROP_POP
 
         RET
@@ -862,6 +894,11 @@ DIVISAO_Y_X:
 
     MOV R1, XL
     MOV R2, XH          ;X = valor a ser subtraido n vezes
+
+    ;Verifica eh uma divisao por 0
+    MOV A, XL
+    ORL A, XH
+    JZ ERRO
 
     MOV R3, #0H
     MOV R4, #0H         ;Quociente = num de subtracoes
@@ -937,6 +974,10 @@ DIVISAO_Y_X:
             LCALL DROP_POP
 
             RET
+
+        ERRO:
+            SETB ERRO
+            JMP INIT
 
 ;;;Rotina - Modulo (Y,X)
 MODULO_Y_X:
@@ -1045,6 +1086,8 @@ POTENCIA_Y_X:
     ;Enquanto n > 0
     ;Multiplicar o numero por ele msm
 
+    ;Armazenar o sinal de y, e ir complementando o msm a cada iteracao
+
     MOV AUX3L, YL
     MOV AUX3H, YH          ;AUX3 = Y inicial, numero a ser multiplicado
 
@@ -1056,16 +1099,23 @@ POTENCIA_Y_X:
 
     LOOP_POTENCIA:
         ;Multiplicacao inicial para o resultado da potencia
-        MOV XL, AUX3L
-        MOV XH, AUX3H            ;X = resultado da multiplicacao
+        MOV XL, AUX4L
+        MOV XH, AUX4H            ;X = numero a ser multiplicado
 
-        MOV YL, AUX4L
-        MOV YH, AUX4H            ;Y = Y inicial, numero a ser multiplicado
+        MOV YL, AUX3L
+        MOV YH, AUX3H            ;Y = resultado da multiplicacao
 
         LCALL MULTIPLICACAO_Y_X  ;Multiplica o numero com ele msm, resultado em X
 
         MOV AUX3L, XL
         MOV AUX3H, XH            ;Resultado da multiplicacao em R2,R1
+
+        MOV C, SINAL_X
+        MOV A, #0H
+        ADDC A, #0H              ;A.0 = SINAL_X
+        MOV AUX6H, A             ;AUX6H.0 = SINAL_X
+
+        CLR SINAL_X
 
         ;Subtracao para o loop
         MOV YL, AUX5L
@@ -1077,7 +1127,7 @@ POTENCIA_Y_X:
         LCALL SUBTRACAO_Y_X      ;Contagem do numero de multiplicacoes efetudas
 
         MOV AUX5L, XL
-        MOV AUX5H, XH            ;AUX5 = novo numero de vezes a ser somado
+        MOV AUX5H, XH            ;AUX5 = novo numero de vezes a ser multiplicado
 
         ;Verifica se o numero de vezes a ser somado chegou em 1
         MOV A, AUX5H
@@ -1087,6 +1137,10 @@ POTENCIA_Y_X:
 
         MOV YL, AUX3L
         MOV YH, AUX3H            ;AUX3 = Resultado final
+
+        MOV A, AUX6H
+        MOV C, A.0
+        MOV SINAL_Y, C      ;Sinal resultado
 
         LCALL DROP_POP
 
